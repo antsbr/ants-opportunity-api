@@ -1,20 +1,28 @@
 package org.ants.opportunity.model;
 
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.geo.Point;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 
-import java.util.List;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class Opportunity {
 
     @Id
     public String id;
+
+    @NotBlank
+    @Size(min = 3, max = 255)
     public String name;
+
+    @NotNull
     public Type type;
+
+    @NotNull
     @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
     public GeoJsonPoint location;
 
