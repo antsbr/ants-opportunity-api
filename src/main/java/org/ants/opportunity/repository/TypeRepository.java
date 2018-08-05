@@ -6,4 +6,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource(collectionResourceRel = "Type", path = "type")
 public interface TypeRepository extends MongoRepository<Type, String> {
+
+    Type findByName(String name);
 }

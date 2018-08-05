@@ -1,6 +1,7 @@
 package org.ants.opportunity.repository;
 
 import org.ants.opportunity.model.Opportunity;
+import org.bson.types.ObjectId;
 import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.Point;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -16,6 +17,8 @@ public interface OpportunityRepository extends MongoRepository<Opportunity, Stri
     @Query("{'type.name': ?0}")
     List<Opportunity> findByType(@Param("type") String type);
 
-    List<Opportunity> findByLocationNear(@Param("latitude-longitude") Point near, @Param("maxdistance") Distance maxDistance);
+    @Query("{'type.id': ?0}")
+    List<Opportunity> findByTypeId(@Param("typeId") ObjectId typeId);
 
+    List<Opportunity> findByLocationNear(@Param("latitude-longitude") Point near, @Param("maxdistance") Distance maxDistance);
 }
