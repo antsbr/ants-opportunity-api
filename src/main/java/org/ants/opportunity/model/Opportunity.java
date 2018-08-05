@@ -34,4 +34,30 @@ public class Opportunity {
     }
 
     public Opportunity() {}
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @NotNull
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(@NotNull Type type) {
+        this.type = type;
+    }
+
+    @NotNull
+    public GeoJsonPoint getLocation() {
+        return location;
+    }
+
+    public void setLocation(@NotNull GeoJsonPoint location) {
+        this.location = location;
+    }
 }
