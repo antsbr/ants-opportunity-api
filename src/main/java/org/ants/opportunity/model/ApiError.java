@@ -1,21 +1,20 @@
 package org.ants.opportunity.model;
 
+import org.ants.opportunity.config.TimeConfig;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ApiError {
 
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss z");
-    Timestamp timestamp;
-    private String timestampString;
+    @Autowired
+    private TimeConfig timeConfig;
     private HttpStatus status;
     private String message;
     private String debugMessage;
 
-    private ApiError() {
-        timestampString = this.simpleDateFormat.format(new Timestamp(System.currentTimeMillis()).getTime());
-    }
+    private ApiError() {}
 
     public ApiError(HttpStatus status) {
         this();
@@ -44,12 +43,16 @@ public class ApiError {
         this.debugMessage = debugMessage;
     }
 
+    public void setStatus(HttpStatus status) {
+        this.status = status;
+    }
+
     public HttpStatus getStatus() {
         return status;
     }
 
     public String getTimestamp() {
-        return this.timestampString;
+        return timeConfig.getTimestamp();
     }
 
     public String getMessage() {
