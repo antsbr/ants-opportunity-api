@@ -1,5 +1,6 @@
 package org.ants.opportunity.event;
 
+import org.ants.opportunity.Exception.OpportunityTypeNotFoundException;
 import org.ants.opportunity.model.Opportunity;
 import org.ants.opportunity.model.Type;
 import org.ants.opportunity.repository.TypeRepository;
@@ -8,8 +9,6 @@ import org.springframework.data.rest.core.annotation.HandleBeforeCreate;
 import org.springframework.data.rest.core.annotation.HandleBeforeSave;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
 import org.springframework.stereotype.Component;
-
-import java.util.NoSuchElementException;
 
 @Component
 @RepositoryEventHandler(Opportunity.class)
@@ -25,16 +24,13 @@ public class OpportunityEventHandler {
     @HandleBeforeSave
     public void validateType(Opportunity opportunity) {
         Type type = opportunity.type;
-
         type = types.findByName(type.name);
 
         if( type != null ){
             opportunity.setType(type);
         }else {
-            throw new NoSuchElementException
-                    ("The type with name: "+ opportunity.type.name +" was not found.");
+            throw new OpportunityTypeNotFoundException
+                    ("The type with name '"+ opportunity.type.name +"' was not found.");
         }
-
     }
-
 }
