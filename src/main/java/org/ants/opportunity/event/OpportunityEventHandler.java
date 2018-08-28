@@ -1,6 +1,6 @@
 package org.ants.opportunity.event;
 
-import org.ants.opportunity.Exception.OpportunityTypeNotFoundException;
+import org.ants.opportunity.exception.OpportunityTypeNotFoundException;
 import org.ants.opportunity.model.Opportunity;
 import org.ants.opportunity.model.Type;
 import org.ants.opportunity.repository.TypeRepository;
