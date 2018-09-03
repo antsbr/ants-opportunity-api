@@ -36,6 +36,10 @@ public class Opportunity {
 
     public Opportunity() {}
 
+    public ObjectId getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }
@@ -60,5 +64,15 @@ public class Opportunity {
 
     public void setLocation(@NotNull GeoJsonPoint location) {
         this.location = location;
+    }
+
+    @Override
+    public String toString() {
+        return "Opportunity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", type=" + type +
+                ", location=" + location +
+                '}';
     }
 }
