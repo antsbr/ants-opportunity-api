@@ -25,20 +25,6 @@ public class OpportunityEventHandler {
     }
 
     @HandleBeforeCreate
-    @HandleBeforeSave
-    public void validateType(Opportunity opportunity) {
-        Type type = opportunity.type;
-        type = types.findByName(type.name);
-        if( type != null ){
-            opportunity.setType(type);
-        }else {
-            logger.warn("The type with name '"+ opportunity.type.name +"' was not found.");
-            throw new OpportunityTypeNotFoundException
-                    ("The type with name '"+ opportunity.type.name +"' was not found.");
-        }
-    }
-
-    @HandleBeforeCreate
     public void logBeforeCreation(Opportunity opportunity){
         logger.debug("Creating opportunity: "+opportunity.toString());
     }
@@ -73,5 +59,17 @@ public class OpportunityEventHandler {
         logger.info("Opportunity Deleted: "+opportunity.toString());
     }
 
+    @HandleBeforeCreate
+    @HandleBeforeSave
+    public void validateType(Opportunity opportunity) {
+        Type type = opportunity.type;
+        type = types.findByName(type.name);
+        if( type != null ){
+            opportunity.setType(type);
+        }else {
+            throw new OpportunityTypeNotFoundException
+                    ("The type with name '"+ opportunity.type.name +"' was not found.");
+        }
+    }
 
 }
