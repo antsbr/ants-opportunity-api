@@ -32,11 +32,9 @@
             <AppenderRef ref="Console-Appender"/>
             <AppenderRef ref="RollingFileAppender-App"/>
         </Root>
-        <Logger name="org.ants.opportunity" level="DEBUG">
-            <AppenderRef ref="File-Appender-Debug"/>
-        </Logger>
-        <Logger name="org.ants.opportunity" level="ERROR">
-            <AppenderRef ref="File-Appender-Errors"/>
+        <Logger name="org.ants.opportunity" level="ALL">
+            <AppenderRef ref="File-Appender-Errors" level="ERROR"/>
+            <AppenderRef ref="File-Appender-Debug" level="DEBUG"/>
         </Logger>
     </Loggers>
 </Configuration>
