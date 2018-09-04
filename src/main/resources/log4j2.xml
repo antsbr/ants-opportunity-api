@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration level="error">
+    <Properties>
+        <Property name="log-path">logs</Property>
+        <Property name="archive">${log-path}/archive</Property>
+    </Properties>
+    <Appenders>
+        <Console name="Console-Appender" target="SYSTEM_OUT">
+            <PatternLayout>
+                <pattern>
+                    [%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+                </pattern>
+            </PatternLayout>
+        </Console>
+        <File name="File-Appender-Errors" fileName="${log-path}/errors.json">
+            <JsonLayout complete="true" compact="false"/>
+        </File>
+        <File name="File-Appender-Debug" fileName="${log-path}/debug.json">
+            <JsonLayout complete="true" compact="false"/>
+        </File>
+        <RollingFile name="RollingFileAppender-App" fileName="logs/app-log.json" filePattern="${archive}/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+            <JsonLayout complete="true" compact="false"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="6" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20" />
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="INFO">
+            <AppenderRef ref="Console-Appender"/>
+            <AppenderRef ref="RollingFileAppender-App"/>
+        </Root>
+        <Logger name="org.ants.opportunity" level="ALL">
+            <AppenderRef ref="File-Appender-Errors" level="ERROR"/>
+            <AppenderRef ref="File-Appender-Debug" level="DEBUG"/>
+        </Logger>
+    </Loggers>
+</Configuration>
