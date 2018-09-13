@@ -10,8 +10,9 @@ import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
-public class Opportunity {
+public class Opportunity implements Serializable {
 
     @Id
     public ObjectId id;

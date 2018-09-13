@@ -5,8 +5,9 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.annotation.Id;
 
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
-public class Type {
+public class Type implements Serializable {
 
     @Id
     public ObjectId id;
