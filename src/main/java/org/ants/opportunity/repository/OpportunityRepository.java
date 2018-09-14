@@ -17,26 +17,26 @@ import java.util.List;
 @RepositoryRestResource(collectionResourceRel = "Opportunity", path = "opportunity")
 public interface OpportunityRepository extends MongoRepository<Opportunity, String> {
 
-    @Cacheable({"opportunity"})
+    @Cacheable({"opportunityByType"})
     @Query("{'type.name': ?0}")
     List<Opportunity> findByType(@Param("type") String type);
 
-    @Cacheable({"opportunity"})
+    @Cacheable({"opportunityByType"})
     @Query("{'type.id': ?0}")
     List<Opportunity> findByTypeId(@Param("typeId") ObjectId typeId);
 
-    @Cacheable({"opportunity"})
+    @Cacheable({"opportunityListAll"})
     List<Opportunity> findAll();
 
     @Cacheable({"opportunity"})
     Opportunity findById(ObjectId id);
 
-    @CachePut({"opportunity"})
+    @CachePut({"opportunity","opportunityByLocation","opportunityListAll","opportunityByType"})
     Opportunity save(Opportunity opportunity);
 
-    @CacheEvict({"opportunity"})
+    @CacheEvict({"opportunity","opportunityByLocation","opportunityListAll","opportunityByType"})
     void delete(Opportunity opportunity);
 
-    @Cacheable({"opportunity"})
+    @Cacheable({"opportunityByLocation"})
     List<Opportunity> findByLocationNear(@Param("latitude-longitude") Point near, @Param("maxdistance") Distance maxDistance);
 }
