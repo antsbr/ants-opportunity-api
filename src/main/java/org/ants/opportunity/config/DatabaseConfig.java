@@ -24,7 +24,7 @@ public class DatabaseConfig extends AbstractMongoConfiguration {
     private String mongoUri;
     @Value("${MONGO_DATABASE}")
     private String database;
-    @Value("${spring_profiles_active}")
+    @Value("${spring_profiles_active:local}")
     private String profile;
 
     @Bean("mongo")
