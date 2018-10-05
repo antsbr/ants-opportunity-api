@@ -15,12 +15,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import java.io.IOException;
 
 @Configuration
 public class DatabaseConfig extends AbstractMongoConfiguration {
-    private MongodExecutable mongodExecutable;
 
     @Value("${MONGO_URI}")
     private String mongoUri;
@@ -31,7 +29,7 @@ public class DatabaseConfig extends AbstractMongoConfiguration {
 
     @Bean("mongo")
     @Profile("production")
-    public Mongo getMongoConnection() throws Exception {
+    public Mongo getMongoConnection() {
         return new MongoClient(new MongoClientURI(mongoUri));
     }
 
@@ -51,7 +49,7 @@ public class DatabaseConfig extends AbstractMongoConfiguration {
         }
 
         MongodStarter starter = MongodStarter.getDefaultInstance();
-        mongodExecutable = starter.prepare(mongodConfig);
+        MongodExecutable mongodExecutable = starter.prepare(mongodConfig);
 
         try {
             mongodExecutable.start();
