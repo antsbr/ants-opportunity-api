@@ -22,6 +22,26 @@ public class Type implements Serializable {
         this.name = name;
     }
 
+    public Type(String name) {
+        this.name = name;
+    }
+
+    public ObjectId getId() {
+        return id;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public String toString() {
         return "Type{" +
