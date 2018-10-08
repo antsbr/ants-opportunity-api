@@ -10,10 +10,10 @@ import java.io.Serializable;
 public class Type implements Serializable {
 
     @Id
-    public ObjectId id;
+    private ObjectId id;
     @NotBlank
     @Size(min = 3, max = 50)
-    public String name;
+    private String name;
 
     public Type() {}
 

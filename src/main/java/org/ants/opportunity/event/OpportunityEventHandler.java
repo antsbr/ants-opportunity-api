@@ -62,13 +62,13 @@ public class OpportunityEventHandler {
     @HandleBeforeCreate
     @HandleBeforeSave
     public void validateType(Opportunity opportunity) {
-        Type type = opportunity.type;
-        type = types.findByName(type.name);
+        Type type = opportunity.getType();
+        type = types.findByName(type.getName());
         if( type != null ){
             opportunity.setType(type);
         }else {
             throw new OpportunityTypeNotFoundException
-                    ("The type with name '"+ opportunity.type.name +"' was not found.");
+                    ("The type with name '"+ opportunity.getType().getName() +"' was not found.");
         }
     }
 

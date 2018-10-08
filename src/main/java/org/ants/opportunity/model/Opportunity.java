@@ -15,18 +15,18 @@ import java.io.Serializable;
 public class Opportunity implements Serializable {
 
     @Id
-    public ObjectId id;
+    private ObjectId id;
 
     @NotBlank
     @Size(min = 3, max = 255)
-    public String name;
+    private String name;
 
     @NotNull
-    public Type type;
+    private Type type;
 
     @NotNull
     @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
-    public GeoJsonPoint location;
+    private GeoJsonPoint location;
 
     public Opportunity(ObjectId id, String name, Type type, GeoJsonPoint location) {
         this.id = id;

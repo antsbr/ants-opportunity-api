@@ -20,7 +20,7 @@ public class TypeEventHandler {
 
     @HandleAfterSave
     public void updateOpportunityInfo(Type type) {
-        for ( Opportunity opportunity : opportunities.findByTypeId(type.id) ){
+        for ( Opportunity opportunity : opportunities.findByTypeId(type.getId()) ){
             opportunity.setType(type);
             opportunities.save(opportunity);
         }
