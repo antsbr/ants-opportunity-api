@@ -1,86 +1,44 @@
 package OpportunityTest;
 
-import Connection.DatabaseConnection;
 import DataLoader.OpportunityLoader;
 import DataLoader.TypeLoader;
-import com.github.javafaker.Faker;
-import com.mongodb.BasicDBObjectBuilder;
-import com.mongodb.DBObject;
-import com.mongodb.Mongo;
-import com.mongodb.MongoClient;
-import de.flapdoodle.embed.mongo.MongodExecutable;
-import de.flapdoodle.embed.mongo.MongodStarter;
-import de.flapdoodle.embed.mongo.config.IMongodConfig;
-import de.flapdoodle.embed.mongo.config.MongodConfigBuilder;
-import de.flapdoodle.embed.mongo.config.Net;
-import de.flapdoodle.embed.mongo.distribution.Version;
-import de.flapdoodle.embed.process.runtime.Network;
 import org.ants.opportunity.model.Opportunity;
 import org.ants.opportunity.model.Type;
-import org.bson.types.ObjectId;
-import org.junit.jupiter.api.*;
-import org.springframework.data.mongodb.core.MongoTemplate;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
-import org.springframework.data.mongodb.core.query.BasicQuery;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.CriteriaDefinition;
-import org.springframework.data.mongodb.core.query.Query;
-
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.when;
-import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.Matchers.*;
+import static io.restassured.RestAssured.*;
 
 public class OpportunityFindTest {
-    private static final String API_SEARCH_OPPORTUNITY_BASE = "/api/opportunity/search/";
-    private static final String FIND_BY_LOCATION_NEAR = "findByLocationNear";
+    private static final String API_OPPORTUNITY_BASE = "/api/opportunity/";
+    private static final String FIND_BY_LOCATION_NEAR = "search/findByLocationNear";
 
-    @BeforeAll
-    static void loadData(){
-        TypeLoader.addFakeType(10);
-        OpportunityLoader.addFakeOpportunity(100);
-    }
-
-/*    @AfterAll
+    @AfterAll
     static void clean(){
-        mongoTemplate.dropCollection("opportunity");
-        mongoTemplate.dropCollection("type");
+        TypeLoader.removeAllElements();
+        OpportunityLoader.removeAllElements();
     }
-
- /*   @AfterAll
-    static void clean() {
-        mongodExecutable.stop();
-    }
-
- /*   @DisplayName("given object to save"
-            + " when save object using MongoDB template"
-            + " then object is saved")
-    @Test
-    void test() throws Exception {
-        /* given
-        DBObject objectToSave = BasicDBObjectBuilder.start()
-                .add("key", "value")
-                .get();
-
-        //assert(1==1);
-        //assert(mongoTemplate.findAll(DBObject.class, "collection")).get(0).equals("value");
-    }*/
 
     @Test public void
     findOpportunityByLocationNearRadius() {
-        given().
-                param("latitude-longitude","2.435048,48.886112").
-                param("maxdistance","20km").
-                when().
-                get(API_SEARCH_OPPORTUNITY_BASE+FIND_BY_LOCATION_NEAR).
-                then().
-                statusCode(404);/*.
-        body("name", equalTo("Teste2"));*/
+        Opportunity opportunity = new Opportunity();
+        opportunity.setName("Instituto Federal de São Paulo - Quermece");
+        opportunity.setType(TypeLoader.getFakeElement());
+        opportunity.setLocation(new GeoJsonPoint(-47.2332798,-22.8511083));
+        OpportunityLoader.addElement(opportunity);
 
+        given().
+                param("latitude-longitude","-22.8503613,-47.2325119").
+                param("maxdistance","1km").
+        when().
+                get(API_OPPORTUNITY_BASE+FIND_BY_LOCATION_NEAR).
+        then().
+                statusCode(200).
+                body("content.name", hasItems("Instituto Federal de São Paulo - Quermece")).
+                body("content.size()", is(1));
     }
 
 }
