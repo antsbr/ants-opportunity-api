@@ -14,7 +14,7 @@ public class OpportunityLoader {
     private static final MongoTemplate DATABASE = DatabaseConnection.getIntance();
     private static final Faker FAKER = new Faker();
 
-    public static void addFakeOpportunity(int numberOfOpportunities){
+    public static void addFakeElement(int numberOfOpportunities){
         int numberOfTypesAvailable = (int)DATABASE.count(new Query(), Type.class);
         for(int i = 0;i<numberOfOpportunities; i++) {
             // Select a random type for each opportunity
@@ -31,5 +31,9 @@ public class OpportunityLoader {
                                                     ));
             DATABASE.save(opportunity, "opportunity");
         }
+    }
+
+    public static void addElement(Opportunity opportunity){
+        DATABASE.save(opportunity, "opportunity");
     }
 }

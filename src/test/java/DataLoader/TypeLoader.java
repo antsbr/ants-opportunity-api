@@ -9,12 +9,16 @@ public class TypeLoader {
     private static final MongoTemplate DATABASE = DatabaseConnection.getIntance();
     private static final Faker FAKER = new Faker();
 
-    public static void addFakeType(int numberOfTypes){
+    public static void addFakeElement(int numberOfTypes){
         for(int i = 0;i < numberOfTypes; i++) {
             Type type = new Type();
             type.setName(FAKER.funnyName().name());
             DATABASE.save(type, "type");
         }
+    }
+
+    public static void addElement(Type type){
+        DATABASE.save(type, "type");
     }
 
 }
