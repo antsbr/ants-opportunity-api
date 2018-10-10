@@ -22,7 +22,6 @@ repositories {
 configurations {
     all {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging' //Removed to not conflict with Log4j
-
     }
 }
 
@@ -35,6 +34,8 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-data-redis')
     compile group: 'de.flapdoodle.embed', name: 'de.flapdoodle.embed.mongo', version: '2.1.1'
 
+
+    testCompile 'org.yaml:snakeyaml:1.23'
     testCompile group: 'de.flapdoodle.embed', name: 'de.flapdoodle.embed.mongo', version: '2.1.1'
     testCompile group: 'io.rest-assured', name: 'rest-assured', version: '3.1.1'
     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.3.1'
