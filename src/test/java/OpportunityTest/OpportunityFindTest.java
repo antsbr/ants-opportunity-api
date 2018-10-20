@@ -2,25 +2,24 @@ package OpportunityTest;
 
 import DataLoader.OpportunityLoader;
 import DataLoader.TypeLoader;
+import org.ants.opportunity.Application;
 import org.ants.opportunity.model.Opportunity;
-import org.ants.opportunity.model.Type;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringRunner;
+
 import static org.hamcrest.Matchers.*;
 import static io.restassured.RestAssured.*;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@TestPropertySource(locations = {"classpath:test.properties"})
 public class OpportunityFindTest {
     private static final String API_OPPORTUNITY_BASE = "/api/opportunity/";
     private static final String FIND_BY_LOCATION_NEAR = "search/findByLocationNear";
-
-    @AfterAll
-    static void clean(){
-        TypeLoader.removeAllElements();
-        OpportunityLoader.removeAllElements();
-    }
 
     @Test public void
     findOpportunityByLocationNearRadius() {
