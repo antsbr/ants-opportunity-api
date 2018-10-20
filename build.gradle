@@ -26,15 +26,15 @@ configurations {
 }
 
 bootRun {
-    environment "MONGO_URI", "mongodb://ants-user:Jz7BM6&4sexyzBZpv9d&@cluster0-shard-00-00-psbfz.mongodb.net:27017,cluster0-shard-00-01-psbfz.mongodb.net:27017,cluster0-shard-00-02-psbfz.mongodb.net:27017/ants?replicaSet=Cluster0-shard-0&ssl=true&authSource=admin"
+    environment "MONGO_URI", "localhost"
     environment "MONGO_DATABASE", "ants"
     environment "SPRING_PROFILE_ACTIVE", "local"
 }
 
 test {
-    environment "MONGO_URI", "mongodb://ants-user:Jz7BM6&4sexyzBZpv9d&@cluster0-shard-00-00-psbfz.mongodb.net:27017,cluster0-shard-00-01-psbfz.mongodb.net:27017,cluster0-shard-00-02-psbfz.mongodb.net:27017/ants?replicaSet=Cluster0-shard-0&ssl=true&authSource=admin"
+    environment "MONGO_URI", "localhost"
     environment "MONGO_DATABASE", "ants"
-    environment "SPRING_PROFILE_ACTIVE", "PROD"
+    environment "SPRING_PROFILE_ACTIVE", "localTest"
 }
 
 dependencies {
