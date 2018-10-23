@@ -20,7 +20,7 @@ import static io.restassured.RestAssured.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestPropertySource(locations = {"classpath:test.properties"})
-public class OpportunityFindTest {
+public class OpportunityFindByLocationTest {
     private static final String API_OPPORTUNITY_BASE = "/api/opportunity/";
     private static final String FIND_BY_LOCATION_NEAR = "search/findByLocationNear";
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -31,6 +31,7 @@ public class OpportunityFindTest {
     findOpportunityByLocationNearRadius() {
         logger.info("Testing finding opportunity 1km location radius");
 
+        logger.info("Adding opportunity inside the radius");
         Opportunity opportunity = new Opportunity();
         opportunity.setName("Instituto Federal de São Paulo - Quermece");
         opportunity.setType(TypeLoader.getFakeElement());
@@ -50,31 +51,11 @@ public class OpportunityFindTest {
                 param("latitude-longitude","-22.8503613,-47.2325119").
                 param("maxdistance","1km").
         when().
-                get(API_OPPORTUNITY_BASE+FIND_BY_LOCATION_NEAR).
+                get(API_OPPORTUNITY_BASE + FIND_BY_LOCATION_NEAR).
         then().
                 statusCode(200).
                 body("content.name", hasItems("Instituto Federal de São Paulo - Quermece")).
                 body("content.size()", is(1));
     }
-
-    /*@Test public void
-    findOpportunityByLocationNearRadius2() {
-        logger.info("Oi");
-        Opportunity opportunity = new Opportunity();
-        opportunity.setName("Instituto Federal de São Paulo - Quermece");
-        opportunity.setType(TypeLoader.getFakeElement());
-        opportunity.setLocation(new GeoJsonPoint(-47.2332798,-22.8511083));
-        OpportunityLoader.addElement(opportunity);
-
-        given().
-                param("latitude-longitude","-22.8503613,-47.2325119").
-                param("maxdistance","1km").
-                when().
-                get(API_OPPORTUNITY_BASE+FIND_BY_LOCATION_NEAR).
-                then().
-                statusCode(200).
-                body("content.name", hasItems("Instituto Federal de São Paulo - Quermece")).
-                body("content.size()", is(1));
-    }*/
 
 }
