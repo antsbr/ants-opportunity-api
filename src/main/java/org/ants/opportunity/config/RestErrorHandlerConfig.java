@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.data.rest.core.RepositoryConstraintViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -29,6 +30,18 @@ public class RestErrorHandlerConfig extends ResponseEntityExceptionHandler {
         apiError.setMessage(ex.getMessage());
         apiError.setDebugMessage("Please find a valid type in /api/type");
         logger.error(ex.getMessage());
+        System.out.println(apiError.toString());
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(Exception.class)
+    protected ResponseEntity<Object> handleUnsupportedException(
+            Exception ex) {
+        apiError.setStatus(BAD_REQUEST);
+        apiError.setMessage(ex.getMessage());
+        apiError.setDebugMessage("Sorry");
+        logger.error(ex.getMessage());
+        System.out.println(apiError.toString());
         return buildResponseEntity(apiError);
     }
 
