@@ -63,6 +63,10 @@ public class OpportunityEventHandler {
     @HandleBeforeSave
     public void validateType(Opportunity opportunity) {
         Type type = opportunity.getType();
+        if(type == null){
+            throw new OpportunityTypeNotFoundException
+                    ("The type attribute has not been found.");
+        }
         type = types.findByName(type.getName());
         if( type != null ){
             opportunity.setType(type);
