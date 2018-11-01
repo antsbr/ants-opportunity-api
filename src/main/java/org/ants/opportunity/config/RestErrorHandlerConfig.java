@@ -7,21 +7,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
-import org.springframework.data.rest.core.RepositoryConstraintViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
 public class RestErrorHandlerConfig extends ResponseEntityExceptionHandler {
     @Autowired
     private ApiError apiError;
-    private final  Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger mylogger = LoggerFactory.getLogger(this.getClass());
 
     @ExceptionHandler(OpportunityTypeNotFoundException.class)
     protected ResponseEntity<Object> handleOpportunityTypeNotFoundException(
@@ -29,7 +27,7 @@ public class RestErrorHandlerConfig extends ResponseEntityExceptionHandler {
         apiError.setStatus(BAD_REQUEST);
         apiError.setMessage(ex.getMessage());
         apiError.setDebugMessage("Please find a valid type in /api/type");
-        logger.error(ex.getMessage());
+        mylogger.error(ex.getMessage());
         return buildResponseEntity(apiError);
     }
 
@@ -39,7 +37,7 @@ public class RestErrorHandlerConfig extends ResponseEntityExceptionHandler {
         apiError.setStatus(BAD_REQUEST);
         apiError.setMessage(ex.getMessage());
         apiError.setDebugMessage("Sorry");
-        logger.error(ex.getMessage());
+        mylogger.error(ex.getMessage());
         return buildResponseEntity(apiError);
     }
 

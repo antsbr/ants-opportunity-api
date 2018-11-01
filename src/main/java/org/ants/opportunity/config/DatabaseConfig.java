@@ -11,6 +11,8 @@ import de.flapdoodle.embed.mongo.config.Net;
 import de.flapdoodle.embed.mongo.distribution.Version;
 import de.flapdoodle.embed.process.runtime.Network;
 import org.ants.opportunity.model.Opportunity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,8 +29,7 @@ public class DatabaseConfig extends AbstractMongoConfiguration {
     private static final String IP = "127.0.0.1";
     private static final int PORT = 27017;
     private static MongoClient mongoClient;
-    private static MongodExecutable mongodExecutable;
-    private static MongoTemplate mongoTemplate;
+    private static final Logger logger = LoggerFactory.getLogger(DatabaseConfig.class);
 
     @Value("${MONGO_URI}")
     private String mongoUri;
@@ -52,33 +53,33 @@ public class DatabaseConfig extends AbstractMongoConfiguration {
         return mongoClient;
     }
 
-    private void startLocalDatabase(){
+    private static void startLocalDatabase(){
         IMongodConfig mongodConfig = null;
         try {
             mongodConfig = new MongodConfigBuilder().version(Version.Main.PRODUCTION)
                     .net(new Net(IP, PORT, Network.localhostIsIPv6()))
                     .build();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
 
         MongodStarter starter = MongodStarter.getDefaultInstance();
-        mongodExecutable = starter.prepare(mongodConfig);
+        MongodExecutable mongodExecutable = starter.prepare(mongodConfig);
 
         try {
             mongodExecutable.start();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 
-    private void ensureIndexCreation(){
-        mongoTemplate = new MongoTemplate(mongoClient, "ants");
+    private static void ensureIndexCreation(){
+        MongoTemplate mongoTemplate = new MongoTemplate(mongoClient, "ants");
         //Ensure Opportunity Location Geospatial Index
         mongoTemplate.indexOps(Opportunity.class).ensureIndex( new GeospatialIndex("location").typed(GeoSpatialIndexType.GEO_2DSPHERE) );
     }
 
-    private void connectToLocalDatabase(){
+    private static void connectToLocalDatabase(){
         mongoClient = new MongoClient(IP, PORT);
     }
 

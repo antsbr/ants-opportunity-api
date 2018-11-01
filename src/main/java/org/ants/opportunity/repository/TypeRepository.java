@@ -1,6 +1,5 @@
 package org.ants.opportunity.repository;
 
-import org.ants.opportunity.model.Opportunity;
 import org.ants.opportunity.model.Type;
 import org.bson.types.ObjectId;
 import org.springframework.cache.annotation.CacheEvict;
