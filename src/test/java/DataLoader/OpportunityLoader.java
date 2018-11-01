@@ -21,8 +21,9 @@ public class OpportunityLoader {
         }
     }
 
-    public static void addElement(Opportunity opportunity){
+    public static Opportunity addElement(Opportunity opportunity){
         DATABASE.save(opportunity, OPPORTUNITY_COLLECTION);
+        return opportunity;
     }
 
     public static Opportunity getFakeElement(){

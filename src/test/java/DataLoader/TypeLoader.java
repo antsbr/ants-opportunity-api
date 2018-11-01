@@ -17,8 +17,9 @@ public class TypeLoader {
         }
     }
 
-    public static void addElement(Type type){
+    public static Type addElement(Type type){
         DATABASE.save(type, TYPE_COLLECTION);
+        return type;
     }
 
     public static Type getFakeElement(){
