@@ -1,11 +1,10 @@
-package OpportunityTest;
+package IntegrationTests.OpportunityTest;
 
 import DataLoader.OpportunityLoader;
 import DataLoader.TypeLoader;
 import org.ants.opportunity.Application;
 import org.ants.opportunity.model.Opportunity;
 import org.junit.Test;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

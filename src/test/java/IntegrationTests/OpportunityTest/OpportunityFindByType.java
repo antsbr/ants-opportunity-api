@@ -1,4 +1,4 @@
-package OpportunityTest;
+package IntegrationTests.OpportunityTest;
 
 import Connection.DatabaseConnection;
 import DataLoader.OpportunityLoader;
@@ -6,7 +6,6 @@ import DataLoader.TypeLoader;
 import org.ants.opportunity.Application;
 import org.ants.opportunity.model.Opportunity;
 import org.ants.opportunity.model.Type;
-import org.bson.types.ObjectId;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;

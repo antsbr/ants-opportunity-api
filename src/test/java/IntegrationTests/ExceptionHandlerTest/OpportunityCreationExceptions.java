@@ -1,7 +1,7 @@
-package ExceptionHandlerTest;
+package IntegrationTests.ExceptionHandlerTest;
 
 import DataLoader.OpportunityLoader;
-import OpportunityTest.OpportunityFindByType;
+import IntegrationTests.OpportunityTest.OpportunityFindByType;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.ants.opportunity.Application;
