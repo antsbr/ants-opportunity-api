@@ -1,4 +1,4 @@
-package ExceptionHandler;
+package ExceptionHandlerTest;
 
 import DataLoader.OpportunityLoader;
 import OpportunityTest.OpportunityFindByType;
@@ -28,8 +28,11 @@ public class OpportunityCreationExceptions {
     @Test
     public void opportunityDoesNotHaveTypeAttributeException() throws JsonProcessingException {
         logger.debug("Test for when the opportunity does not have the type attribute");
+
         Opportunity opportunity = new Opportunity();
+
         String opportunityJson = jsonMapper.writeValueAsString(opportunity);
+
         given().
             body(opportunityJson).
             contentType("application/JSON").
@@ -43,11 +46,14 @@ public class OpportunityCreationExceptions {
 
     @Test
     public void opportunityDoesNotHaveAValidTypeException() throws JsonProcessingException {
-        logger.debug("Test for when the opportunity does not have the type attribute");
+        logger.debug("Test for when the opportunity type does not exist in the database");
+
         Opportunity opportunity = OpportunityLoader.getFakeElement();
         opportunity.getType().setId(null);
         opportunity.getType().setName("Type not saved");
+
         String opportunityJson = jsonMapper.writeValueAsString(opportunity);
+
         given().
                 body(opportunityJson).
                 contentType("application/JSON").
