@@ -1,5 +1,6 @@
 package ExceptionHandler;
 
+import DataLoader.OpportunityLoader;
 import OpportunityTest.OpportunityFindByType;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,6 +27,7 @@ public class OpportunityCreationExceptions {
 
     @Test
     public void opportunityDoesNotHaveTypeAttributeException() throws JsonProcessingException {
+        logger.debug("Test for when the opportunity does not have the type attribute");
         Opportunity opportunity = new Opportunity();
         String opportunityJson = jsonMapper.writeValueAsString(opportunity);
         given().
@@ -37,5 +39,23 @@ public class OpportunityCreationExceptions {
             statusCode(400).
             body("debugMessage", is("Please find a valid type in /api/type")).
             body("message", is("The type attribute has not been found."));
+    }
+
+    @Test
+    public void opportunityDoesNotHaveAValidTypeException() throws JsonProcessingException {
+        logger.debug("Test for when the opportunity does not have the type attribute");
+        Opportunity opportunity = OpportunityLoader.getFakeElement();
+        opportunity.getType().setId(null);
+        opportunity.getType().setName("Type not saved");
+        String opportunityJson = jsonMapper.writeValueAsString(opportunity);
+        given().
+                body(opportunityJson).
+                contentType("application/JSON").
+                when().
+                post(API_OPPORTUNITY_BASE).
+                then().
+                statusCode(400).
+                body("debugMessage", is("Please find a valid type in /api/type")).
+                body("message", is("The type with name '"+ opportunity.getType().getName() +"' was not found."));
     }
 }
