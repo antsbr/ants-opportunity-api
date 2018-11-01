@@ -21,7 +21,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 public class RestErrorHandlerConfig extends ResponseEntityExceptionHandler {
     @Autowired
     private ApiError apiError;
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final  Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @ExceptionHandler(OpportunityTypeNotFoundException.class)
     protected ResponseEntity<Object> handleOpportunityTypeNotFoundException(
@@ -30,7 +30,6 @@ public class RestErrorHandlerConfig extends ResponseEntityExceptionHandler {
         apiError.setMessage(ex.getMessage());
         apiError.setDebugMessage("Please find a valid type in /api/type");
         logger.error(ex.getMessage());
-        System.out.println(apiError.toString());
         return buildResponseEntity(apiError);
     }
 
@@ -41,7 +40,6 @@ public class RestErrorHandlerConfig extends ResponseEntityExceptionHandler {
         apiError.setMessage(ex.getMessage());
         apiError.setDebugMessage("Sorry");
         logger.error(ex.getMessage());
-        System.out.println(apiError.toString());
         return buildResponseEntity(apiError);
     }
 
