@@ -1,14 +1,15 @@
 package org.ants.opportunity.config;
 
-import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
-import org.springframework.beans.factory.annotation.Configurable;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 
+@Profile("production")
 @Configuration
 public class DatabaseConfig extends AbstractMongoConfiguration {
 
@@ -17,8 +18,8 @@ public class DatabaseConfig extends AbstractMongoConfiguration {
     @Value("${MONGO_DATABASE}")
     private String database;
 
-    @Bean
-    public Mongo mongo() throws Exception {
+    @Bean(name = "mongo")
+    public MongoClient mongoClient() {
         return new MongoClient(new MongoClientURI(mongoUri));
     }
 
@@ -26,5 +27,4 @@ public class DatabaseConfig extends AbstractMongoConfiguration {
     protected String getDatabaseName() {
         return database;
     }
-
 }
