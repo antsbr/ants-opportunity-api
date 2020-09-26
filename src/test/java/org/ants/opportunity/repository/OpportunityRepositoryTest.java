@@ -36,14 +36,14 @@ public class OpportunityRepositoryTest {
     }
 
     @Test
-    public void save() throws Exception {
+    public void save() {
         final Opportunity opportunity = OpportunityLoader.getFakeElement();
         final Opportunity savedOpportunity = opportunityRepository.save(opportunity);
         assertEquals(opportunity, savedOpportunity);
     }
 
     @Test
-    public void findByName() throws Exception {
+    public void findByName() {
         final Opportunity firstOpportunity = OpportunityLoader.getFakeElement();
         firstOpportunity.setName("Twins");
         final Opportunity secondOpportunity = OpportunityLoader.getFakeElement();
@@ -54,7 +54,7 @@ public class OpportunityRepositoryTest {
     }
 
     @Test
-    public void findByNameLike() throws Exception {
+    public void findByNameLike() {
         final Opportunity fullNameOpportunity = OpportunityLoader.getFakeElement();
         fullNameOpportunity.setName("First Second Third");
         final Opportunity partialNameOpportunity = fullNameOpportunity;
@@ -67,7 +67,7 @@ public class OpportunityRepositoryTest {
     }
 
     @Test
-    public void findByLocationNear() throws Exception {
+    public void findByLocationNear() {
         final Opportunity ifspOpportunity = OpportunityLoader.getFakeElement();
         ifspOpportunity.setName("Instituto Federal de São Paulo - Quermece");
         ifspOpportunity.setLocation(-47.2332798, -22.8511083);
@@ -85,7 +85,7 @@ public class OpportunityRepositoryTest {
     }
 
     @Test
-    public void delete() throws Exception {
+    public void delete() {
         Opportunity opportunity = OpportunityLoader.getFakeElement();
         opportunity = opportunityRepository.save(opportunity);
         final ObjectId opportunityId = opportunity.getId();
@@ -96,14 +96,14 @@ public class OpportunityRepositoryTest {
     }
 
     @Test
-    public void findAll() throws Exception {
+    public void findAll() {
         final Integer numberOfOpportunities = 10;
         opportunityRepository.saveAll(OpportunityLoader.getListOfFakeElement(numberOfOpportunities));
         assertThat(opportunityRepository.findAll(), hasSize(numberOfOpportunities));
     }
 
     @Test
-    public void findById() throws Exception {
+    public void findById() {
         Opportunity opportunity = OpportunityLoader.getFakeElement();
         opportunity.setName("findbyid");
         opportunity = opportunityRepository.save(opportunity);
@@ -116,7 +116,7 @@ public class OpportunityRepositoryTest {
     }
 
     @Test
-    public void findByType() throws Exception {
+    public void findByType() {
         Opportunity animal1Opportunity = OpportunityLoader.getFakeElement();
         animal1Opportunity.setType(OpportunityTypeEnum.ANIMAL);
         Opportunity animal2Opportunity = OpportunityLoader.getFakeElement();
@@ -126,7 +126,7 @@ public class OpportunityRepositoryTest {
 
         opportunityRepository.saveAll(List.of(animal1Opportunity, animal2Opportunity, kidsOpportunity));
 
-        assertThat(opportunityRepository.findByType("Kids"), hasSize(1));
+        assertThat(opportunityRepository.findByType(OpportunityTypeEnum.KIDS), hasSize(1));
     }
 
 
