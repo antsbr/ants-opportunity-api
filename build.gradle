@@ -26,6 +26,9 @@ repositories {
 	maven { url "https://repo.spring.io/milestone" }
 }
 
+test {
+    useJUnitPlatform()
+}
 
 sourceSets {
     integrationTest {
@@ -48,6 +51,8 @@ configurations {
 
 
 dependencies {
+    annotationProcessor('org.projectlombok:lombok:1.18.12')
+    runtime('org.springframework.boot:spring-boot-devtools')
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-starter-log4j2')
     compile('org.springframework.boot:spring-boot-starter-data-mongodb:2.0.3.RELEASE')
@@ -55,20 +60,15 @@ dependencies {
     compile('cz.jirutka.spring:embedmongo-spring:1.3.1')
 	compile('org.webjars:bootstrap:3.3.7-1')
     compileOnly('org.projectlombok:lombok:1.18.12')
-	annotationProcessor('org.projectlombok:lombok:1.18.12')
-    runtime('org.springframework.boot:spring-boot-devtools')
+    compile group: 'com.github.javafaker', name: 'javafaker', version: '0.16'
     testCompile 'org.yaml:snakeyaml:1.27'
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.3.1'
-    compile group: 'com.github.javafaker', name: 'javafaker', version: '0.16'
-    testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: '5.3.1'
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.3.1'
     testCompile group: 'org.hamcrest', name: 'hamcrest-all', version: '1.3'
-    testRuntime(
-            'org.junit.jupiter:junit-jupiter-engine:5.1.0',
-            'org.junit.vintage:junit-vintage-engine:5.1.0',
-            'org.junit.platform:junit-platform-launcher:1.1.0',
-            'org.junit.platform:junit-platform-runner:1.1.0'
-    )
+    testCompile group: 'org.mockito', name: 'mockito-core', version: '2.22.0'
+    testCompile group: 'org.mockito', name: 'mockito-junit-jupiter', version: '2.22.0'
 }
 
 //export test coverage
@@ -84,8 +84,6 @@ task integrationTest(type: Test) {
     classpath = sourceSets.integrationTest.runtimeClasspath
     outputs.upToDateWhen { false }
 }
-
-
 //Ensure that the check task fails the build if there are failing integration tests.
 check.dependsOn integrationTest
 //Ensure that our unit tests are run before our integration tests

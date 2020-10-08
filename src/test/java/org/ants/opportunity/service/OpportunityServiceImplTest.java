@@ -1,33 +1,69 @@
 package org.ants.opportunity.service;
 
 import org.ants.opportunity.model.Opportunity;
-import org.bson.types.ObjectId;
-import org.springframework.data.geo.Distance;
-import org.springframework.data.geo.Point;
+import org.ants.opportunity.repository.OpportunityRepository;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.List;
-import java.util.Optional;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-public interface OpportunityServiceImplTest {
+@ExtendWith(MockitoExtension.class)
+public class OpportunityServiceImplTest {
+    @Mock
+    OpportunityRepository opportunityRepository;
+    @InjectMocks
+    OpportunityServiceImpl opportunityService;
 
-    Opportunity save(Opportunity opportunity);
+    @Test
+    void testSave() {
+        Opportunity opportunity = new Opportunity();
+        when(opportunityRepository.save(any(Opportunity.class))).thenReturn(opportunity);
 
-    Optional<Opportunity> getOpportunity(ObjectId id);
+        Opportunity savedOpportunity = opportunityService.save(new Opportunity());
 
-    List<Opportunity> getAllOpportunities();
+        verify(opportunityRepository).save(any(Opportunity.class));
+        assertThat(savedOpportunity).isNotNull();
+    }
 
-    List<Opportunity> getOpportunitiesAround(Point near, Distance maxDistance);
+    @Test
+    void testGetOpportunity() {
+    }
 
-    List<Opportunity> getOpportunitiesWithName(String name);
+    @Test
+    void testGetAllOpportunities() {
+    }
 
-    List<Opportunity> getOpportunitiesWithNameLike(String name);
+    @Test
+    void testGetOpportunitiesAround() {
+    }
 
-    void removeOpportunity(Opportunity opportunity);
+    @Test
+    void testGetOpportunitiesWithName() {
+    }
 
-    Integer getOpportunitiesCount();
+    @Test
+    void testGetOpportunitiesWithNameLike() {
+    }
 
-    Integer getOpportunitiesCountAround();
+    @Test
+    void testRemoveOpportunity() {
+    }
 
-    List<Opportunity> getOpportunitiesWithType(String type);
+    @Test
+    void testGetOpportunitiesCount() {
+    }
 
+    @Test
+    void testGetOpportunitiesCountAround() {
+    }
+
+    @Test
+    void testGetOpportunitiesWithType() {
+    }
 }
