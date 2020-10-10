@@ -28,4 +28,9 @@ public interface OpportunityRepository extends MongoRepository<Opportunity, Obje
     List<Opportunity> findByLocationNear(Point near, Distance maxDistance);
 
     Opportunity save(Opportunity opportunity);
+
+    long count();
+
+    long countOpportunitiesByLocationNear(Point near, Distance maxDistance);
+
 }

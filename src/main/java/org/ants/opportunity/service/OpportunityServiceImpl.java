@@ -1,6 +1,7 @@
 package org.ants.opportunity.service;
 
 import org.ants.opportunity.model.Opportunity;
+import org.ants.opportunity.model.OpportunityTypeEnum;
 import org.ants.opportunity.repository.OpportunityRepository;
 import org.bson.types.ObjectId;
 import org.springframework.data.geo.Distance;
@@ -22,46 +23,43 @@ public class OpportunityServiceImpl implements OpportunityService{
 
     @Override
     public Optional<Opportunity> getOpportunity(ObjectId id) {
-        return Optional.empty();
+        return opportunityRepository.findById(id);
     }
 
     @Override
     public List<Opportunity> getAllOpportunities() {
-        return null;
+        return opportunityRepository.findAll();
     }
 
     @Override
     public List<Opportunity> getOpportunitiesAround(Point near, Distance maxDistance) {
-        return null;
+        return opportunityRepository.findByLocationNear(near, maxDistance);
     }
 
     @Override
     public List<Opportunity> getOpportunitiesWithName(String name) {
-        return null;
-    }
-
-    @Override
-    public List<Opportunity> getOpportunitiesWithNameLike(String name) {
-        return null;
+        return opportunityRepository.findByNameLike(name);
     }
 
     @Override
     public void removeOpportunity(Opportunity opportunity) {
-
+        opportunityRepository.delete(opportunity);
     }
 
     @Override
     public Integer getOpportunitiesCount() {
-        return null;
+        long longNumberOfOpportunities = opportunityRepository.count();
+        return Math.toIntExact(longNumberOfOpportunities);
     }
 
     @Override
-    public Integer getOpportunitiesCountAround() {
-        return null;
+    public Integer getOpportunitiesCountAround(Point near, Distance maxDistance) {
+        long longNumberOfOpportunities = opportunityRepository.countOpportunitiesByLocationNear(near, maxDistance);
+        return Math.toIntExact(longNumberOfOpportunities);
     }
 
     @Override
     public List<Opportunity> getOpportunitiesWithType(String type) {
-        return null;
+        return opportunityRepository.findByType(OpportunityTypeEnum.valueOf(type.toUpperCase()));
     }
 }

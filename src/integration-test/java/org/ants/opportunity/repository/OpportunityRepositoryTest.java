@@ -128,6 +128,4 @@ public class OpportunityRepositoryTest {
 
         assertThat(opportunityRepository.findByType(OpportunityTypeEnum.KIDS), hasSize(1));
     }
-
-
 }

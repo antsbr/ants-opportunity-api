@@ -20,13 +20,11 @@ public interface OpportunityService {
 
     List<Opportunity> getOpportunitiesWithName(String name);
 
-    List<Opportunity> getOpportunitiesWithNameLike(String name);
-
     void removeOpportunity(Opportunity opportunity);
 
     Integer getOpportunitiesCount();
 
-    Integer getOpportunitiesCountAround();
+    Integer getOpportunitiesCountAround(Point near, Distance maxDistance);
 
     List<Opportunity> getOpportunitiesWithType(String type);
 
